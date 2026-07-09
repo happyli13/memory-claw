@@ -9,31 +9,18 @@ import Matter from 'matter-js';
 
 /* ===================== CONFIG ===================== */
 const CONFIG = {
-  originalPhoto:
-    'https://i.ibb.co/Q7NYjYJq/Chat-GPT-Image-2026-6-28-01-53-52.png',
-  handPhoto: 'https://i.ibb.co/M5B0H7D0/Chat-GPT-Image-2026-6-28-02-15-11.png',
+  originalPhoto: '/photo.png', // 완성 사진 (public 폴더)
+  handPhoto: '/hand.png', // 손 사진 (public 폴더)
   bgmUrl:
     'https://mp3tourl.com/audio/1783602160591-89ba6eb5-283c-4edf-80af-58919a566f76.mp3', // 평소 BGM
   bgmEndUrl:
     'https://mp3tourl.com/audio/1783603797656-2cbd2476-bf68-4321-8d5b-09faf4fdbe5e.mp3', // 조각 완성(엔딩)
   dollImgs: [
-    { url: 'https://i.ibb.co/F40pd5Vd/MOF.webp', w: 150 },
-    {
-      url: 'https://i.ibb.co/LzwQPYy2/Chat-GPT-Image-2026-6-28-03-42-18-Photoroom.png',
-      w: 1000,
-    },
-    {
-      url: 'https://i.ibb.co/jPfXfdT5/b67b3c0d0273003a00ebc5f80fcc2bf2-Photoroom.png',
-      w: 900,
-    },
-    {
-      url: 'https://i.ibb.co/39cYR0rv/sleepy-kirby-v0-2ss0utjlzkn21-Photoroom.png',
-      w: 350,
-    },
-    {
-      url: 'https://i.ibb.co/YFvBKDzS/Chat-GPT-Image-2026-6-28-03-46-30-Photoroom.png',
-      w: 1000,
-    },
+    { url: '/doll1.webp', w: 150 },
+    { url: '/doll2.png', w: 1000 },
+    { url: '/doll3.png', w: 900 },
+    { url: '/doll4.png', w: 350 },
+    { url: '/doll5.png', w: 1000 },
   ],
   dollRadius: 26,
   dollCount: 65,
@@ -1083,6 +1070,7 @@ export default function App() {
   const [chuteOpen, setChuteOpen] = useState(false);
   const [scale, setScale] = useState(1);
   const [intro, setIntro] = useState(true);
+  const [assetsReady, setAssetsReady] = useState(false); // 인형/사진 프리로드 완료 여부
   const [introStep, setIntroStep] = useState(0);
   const [typed, setTyped] = useState(''); // 인트로 타이핑 효과
   const [charms, setCharms] = useState(saved.charms);
@@ -1120,6 +1108,30 @@ export default function App() {
       el.loop = true;
       el.preload = 'auto';
       _bgmFiles[u] = el;
+    });
+  }, []);
+
+  // 인형/사진 이미지 전부를 인트로 동안 미리 다운로드 → 게임 시작 시 즉시 표시
+  useEffect(() => {
+    const urls = [
+      ...CONFIG.dollImgs.map((d) => d.url),
+      CONFIG.originalPhoto,
+      CONFIG.handPhoto,
+    ].filter(Boolean);
+    let left = urls.length;
+    if (left === 0) {
+      setAssetsReady(true);
+      return;
+    }
+    urls.forEach((u) => {
+      const im = new Image();
+      const done = () => {
+        left -= 1;
+        if (left <= 0) setAssetsReady(true);
+      };
+      im.onload = done;
+      im.onerror = done; // 한 장이 실패해도 게임은 진행되게
+      im.src = u;
     });
   }, []);
 
@@ -2076,6 +2088,7 @@ export default function App() {
             <button
               className="soft-btn"
               style={{ marginTop: 24 }}
+              disabled={!assetsReady}
               onClick={(e) => {
                 e.stopPropagation();
                 ensureAudio();
@@ -2083,7 +2096,7 @@ export default function App() {
                 setIntro(false);
               }}
             >
-              🌱 기억 찾으러 가기
+              {assetsReady ? '🌱 기억 찾으러 가기' : '기억을 불러오는 중…'}
             </button>
           )}
         </div>
