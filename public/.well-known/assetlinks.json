@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "app.vercel.memory_claw_nu.twa",
+        "sha256_cert_fingerprints": ["C4:6E:CD:FF:C9:13:37:7D:AE:9D:5F:31:11:47:A0:25:10:28:BF:04:18:D7:E5:33:0A:8A:DE:91:A0:4D:DF:89"]
+      }
+    }]
