@@ -1,0 +1,24 @@
+{
+  "name": "기억의 인형뽑기",
+  "short_name": "기억뽑기",
+  "description": "잃어버린 기억 조각을 찾아가는 인형뽑기",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#AEBE79",
+  "theme_color": "#AEBE79",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
