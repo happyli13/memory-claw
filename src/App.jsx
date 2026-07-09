@@ -2583,7 +2583,7 @@ export default function App() {
                 ◀
               </button>
               <button className="claw-btn" disabled={busy} onClick={grab}>
-                잡기
+                
               </button>
               <button
                 className="arrow-btn"
