@@ -1933,9 +1933,16 @@ export default function App() {
         /* 보관함 새 조각 fly-in */
         .piece-in{transform-box:fill-box;transform-origin:center;animation:piecein .8s cubic-bezier(.2,.85,.3,1) both;}
         @keyframes piecein{0%{opacity:0;transform:translate(60px,-90px) rotate(14deg) scale(1.12)}100%{opacity:1;transform:none}}
-        /* 오락실 스타일 빨간 원형 버튼 */
-        .claw-btn{width:80px;height:80px;border-radius:50%;border:none;cursor:pointer;color:#FFF6EE;font-size:20px;font-family:inherit;background:radial-gradient(circle at 35% 28%, #F09090 0%, #D9534F 55%, #B23B37 100%);box-shadow:0 7px 0 #8F2E2B, inset 0 -5px 10px rgba(0,0,0,0.18);touch-action:manipulation;}
-        .claw-btn:active{transform:translateY(5px);box-shadow:0 2px 0 #8F2E2B, inset 0 -5px 10px rgba(0,0,0,0.18);}
+        /* 오락실 버튼: 받침 링 + 유광 돔 + 누르면 받침 속으로 */
+        .claw-btn{position:relative;width:82px;height:82px;border-radius:50%;border:none;cursor:pointer;color:#FFF2EA;font-size:20px;font-family:inherit;letter-spacing:1px;
+          background:radial-gradient(circle at 50% 118%, rgba(255,255,255,0.22), rgba(255,255,255,0) 42%),radial-gradient(circle at 50% 30%, #E8706B 0%, #D3423D 55%, #A32B27 100%);
+          box-shadow:0 0 0 5px #7E6142, 0 0 0 7px rgba(58,44,30,0.85), 0 8px 0 5px #6B5138, 0 13px 14px rgba(50,30,15,0.4), inset 0 -8px 12px rgba(120,20,15,0.55), inset 0 3px 4px rgba(255,255,255,0.35);
+          text-shadow:0 -1px 1px rgba(120,20,15,0.6), 0 1px 1px rgba(255,255,255,0.25);
+          touch-action:manipulation;}
+        .claw-btn::after{content:'';position:absolute;left:16%;top:7%;width:58%;height:34%;border-radius:50%;background:linear-gradient(rgba(255,255,255,0.55), rgba(255,255,255,0));pointer-events:none;}
+        .claw-btn:active{transform:translateY(6px);
+          box-shadow:0 0 0 5px #7E6142, 0 0 0 7px rgba(58,44,30,0.85), 0 2px 0 5px #6B5138, 0 4px 8px rgba(50,30,15,0.35), inset 0 -4px 8px rgba(120,20,15,0.6), inset 0 4px 8px rgba(0,0,0,0.28);}
+        .claw-btn:active::after{opacity:.3;}
         .claw-btn:disabled{opacity:.55;cursor:default;transform:none;}
         /* 전구 깜빡임이 너무 규칙적이지 않게 */
         .bulb:nth-child(3n){animation-delay:.35s;animation-duration:1.3s;}
